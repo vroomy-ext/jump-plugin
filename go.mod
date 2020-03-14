@@ -3,10 +3,10 @@ module github.com/Hatch1fy/jump-plugin
 go 1.14
 
 require (
-	github.com/Hatch1fy/apikeys v0.3.5
+	github.com/Hatch1fy/apikeys v0.3.7
 	github.com/Hatch1fy/errors v0.3.0
 	github.com/Hatch1fy/httpserve v0.3.1
-	github.com/Hatch1fy/jump v0.3.6
-	github.com/Hatch1fy/service-core v0.3.4
+	github.com/Hatch1fy/jump v0.3.7
+	github.com/Hatch1fy/service-core v0.3.5
 	github.com/hatchify/scribe v0.3.0
 )
