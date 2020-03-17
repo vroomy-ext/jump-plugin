@@ -13,8 +13,6 @@ github.com/Hatch1fy/errors v0.3.3 h1:VgJbpt/pPVY8sPN1sRbRhYyKHg2Xgt93DY1sIPYBRHk
 github.com/Hatch1fy/errors v0.3.3/go.mod h1:SJFCeScmERvwtYMG7EU24Fe0KfXmiIs7tNlcIl0STKk=
 github.com/Hatch1fy/httpserve v0.3.2 h1:bPYyHGOWdKbpxQ5oyzbKvnCMQc40xZ0qPe2Pd7P0bFo=
 github.com/Hatch1fy/httpserve v0.3.2/go.mod h1:SIj6rQ4M/WBkVsvcF9P3ipW2/DF+2tes7M9H57/xRMo=
-github.com/Hatch1fy/jump v0.3.13 h1:qYjNa9xoJ6dFIWpaWPDqOBdIsgWusw2GKYmV5K6oy+M=
-github.com/Hatch1fy/jump v0.3.13/go.mod h1:Xr4tZWTnC3g4ma7NAri57aH5wtadmryaqgRNikYwOD4=
 github.com/Hatch1fy/jump v0.3.14 h1:+lc2hNxsobzCm1PmjYLmIjkOdcAq4FVbjZwBANwRQ7s=
 github.com/Hatch1fy/jump v0.3.14/go.mod h1:Xr4tZWTnC3g4ma7NAri57aH5wtadmryaqgRNikYwOD4=
 github.com/Hatch1fy/logger v0.3.7 h1:pze+tWhII/0hJjuPrNSJA+1c9mk1EnDlooO7ULGGKko=
