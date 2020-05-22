@@ -7,6 +7,10 @@ import (
 	"github.com/Hatch1fy/jump/users"
 )
 
+const (
+	errPasswordsDontMatch = "New password does not match confirmation"
+)
+
 // GetUserID will get the ID of the currently logged in user
 func GetUserID(ctx *httpserve.Context) (res httpserve.Response) {
 	return httpserve.NewJSONResponse(200, ctx.Get("userID"))
@@ -84,7 +88,7 @@ func ChangePassword(ctx *httpserve.Context) (res httpserve.Response) {
 	}
 
 	if cpr.New != cpr.Confirm {
-		err = fmt.Errorf("New password does not match confirmation")
+		err = fmt.Errorf(errPasswordsDontMatch)
 		return httpserve.NewJSONResponse(400, err)
 	}
 
