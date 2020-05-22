@@ -1,8 +1,14 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/Hatch1fy/httpserve"
 	"github.com/Hatch1fy/jump/users"
+)
+
+const (
+	errPasswordsDontMatch = "New password does not match confirmation"
 )
 
 // GetUserID will get the ID of the currently logged in user
@@ -62,4 +68,39 @@ func UpdatePassword(ctx *httpserve.Context) (res httpserve.Response) {
 	}
 
 	return httpserve.NewNoContentResponse()
+}
+
+// ChangePassword accepts current, new, and confirm password fields
+func ChangePassword(ctx *httpserve.Context) (res httpserve.Response) {
+	var (
+		cpr changePasswordRequest
+		err error
+	)
+
+	if err = ctx.BindJSON(&cpr); err != nil {
+		return httpserve.NewJSONResponse(400, err)
+	}
+
+	userID := ctx.Param("userID")
+
+	if _, err = p.jump.Users().Match(userID, cpr.Current); err != nil {
+		return httpserve.NewJSONResponse(400, err)
+	}
+
+	if cpr.New != cpr.Confirm {
+		err = fmt.Errorf(errPasswordsDontMatch)
+		return httpserve.NewJSONResponse(400, err)
+	}
+
+	if err = p.jump.UpdatePassword(userID, cpr.New); err != nil {
+		return httpserve.NewJSONResponse(400, err)
+	}
+
+	return httpserve.NewNoContentResponse()
+}
+
+type changePasswordRequest struct {
+	Current string `json:"current"`
+	New     string `json:"new"`
+	Confirm string `json:"confirm"`
 }
