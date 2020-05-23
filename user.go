@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/Hatch1fy/httpserve"
 	"github.com/Hatch1fy/jump/users"
 )
@@ -87,11 +85,6 @@ func ChangePassword(ctx *httpserve.Context) (res httpserve.Response) {
 		return httpserve.NewJSONResponse(400, err)
 	}
 
-	if cpr.New != cpr.Confirm {
-		err = fmt.Errorf(errPasswordsDontMatch)
-		return httpserve.NewJSONResponse(400, err)
-	}
-
 	if err = p.jump.UpdatePassword(userID, cpr.New); err != nil {
 		return httpserve.NewJSONResponse(400, err)
 	}
@@ -102,5 +95,4 @@ func ChangePassword(ctx *httpserve.Context) (res httpserve.Response) {
 type changePasswordRequest struct {
 	Current string `json:"current"`
 	New     string `json:"new"`
-	Confirm string `json:"confirm"`
 }
