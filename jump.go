@@ -33,18 +33,20 @@ const (
 
 var p plugin
 
-// Init will initialize a plugin
-func init() {
-	var err error
-	dir := "./data"
+// Init will be called by vroomy on initialization
+func Init(env map[string]string) (err error) {
 	p.out = scribe.New("Auth")
-	if p.jump, err = jump.New(dir); err != nil {
+
+	if p.jump, err = jump.New(env["dataDir"]); err != nil {
 		log.Fatalf("error initializing jump: %v", err)
 	}
 
+	// TODO: Move this to seed
 	if err = p.seed(); err != nil {
 		log.Fatalf("error seeding users: %v", err)
 	}
+
+	return
 }
 
 type plugin struct {
