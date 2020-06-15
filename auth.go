@@ -2,11 +2,9 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/Hatch1fy/errors"
 	"github.com/Hatch1fy/httpserve"
-	"github.com/Hatch1fy/jump"
 	"github.com/Hatch1fy/jump/users"
 	core "github.com/Hatch1fy/service-core"
 )
@@ -47,29 +45,9 @@ func Login(ctx *httpserve.Context) (res httpserve.Response) {
 // Logout is the logout handler
 func Logout(ctx *httpserve.Context) (res httpserve.Response) {
 	var err error
-	userID := ctx.Get("userID")
-	if len(userID) == 0 {
-		return httpserve.NewJSONResponse(400, ErrAlreadyLoggedOut)
-	}
-
-	var key, token string
-	if key, err = getCookieValue(ctx.Request, jump.CookieKey); err != nil {
+	if err = p.jump.Logout(ctx); err != nil {
 		return httpserve.NewJSONResponse(400, err)
 	}
-
-	if token, err = getCookieValue(ctx.Request, jump.CookieToken); err != nil {
-		return httpserve.NewJSONResponse(400, err)
-	}
-
-	if err = p.jump.Logout(key, token); err != nil {
-		return httpserve.NewJSONResponse(400, err)
-	}
-
-	keyC := unsetCookie(ctx.Request.URL.Host, jump.CookieKey, key)
-	tokenC := unsetCookie(ctx.Request.URL.Host, jump.CookieToken, token)
-
-	http.SetCookie(ctx.Writer, &keyC)
-	http.SetCookie(ctx.Writer, &tokenC)
 
 	return httpserve.NewNoContentResponse()
 }
