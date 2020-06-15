@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	"strings"
-	"time"
 
 	"github.com/Hatch1fy/jump/permissions"
 
@@ -70,31 +68,5 @@ func getPermissions(permsStr string) (a permissions.Action) {
 		a |= permissions.ActionDelete
 	}
 
-	return
-}
-
-func newCookie(host, name, value string, expires time.Time) (c http.Cookie) {
-	c.Domain = host
-	c.Name = name
-	c.Value = value
-	c.Expires = expires
-	return
-}
-
-func setCookie(host, name, value string) (c http.Cookie) {
-	return newCookie(host, name, value, time.Now().AddDate(1, 0, 0))
-}
-
-func unsetCookie(host, name, value string) (c http.Cookie) {
-	return newCookie(host, name, value, time.Now().AddDate(-1, 0, 0))
-}
-
-func getCookieValue(req *http.Request, name string) (value string, err error) {
-	var c *http.Cookie
-	if c, err = req.Cookie(name); err != nil {
-		return
-	}
-
-	value = c.Value
 	return
 }
