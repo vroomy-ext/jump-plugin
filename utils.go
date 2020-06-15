@@ -81,10 +81,6 @@ func newCookie(host, name, value string, expires time.Time) (c http.Cookie) {
 	return
 }
 
-func setCookie(host, name, value string) (c http.Cookie) {
-	return newCookie(host, name, value, time.Now().AddDate(1, 0, 0))
-}
-
 func unsetCookie(host, name, value string) (c http.Cookie) {
 	return newCookie(host, name, value, time.Now().AddDate(-1, 0, 0))
 }
