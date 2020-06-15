@@ -27,20 +27,13 @@ func Login(ctx *httpserve.Context) (res httpserve.Response) {
 		return httpserve.NewJSONResponse(400, err)
 	}
 
-	var key, token string
-	if login.ID, key, token, err = p.jump.Login(login.Email, login.Password); err != nil {
+	if login.ID, err = p.jump.Login(ctx, login.Email, login.Password); err != nil {
 		if err == core.ErrEntryNotFound {
 			err = ErrNoLoginFound
 		}
 
 		return httpserve.NewJSONResponse(400, err)
 	}
-
-	keyC := setCookie(ctx.Request.Host, jump.CookieKey, key)
-	tokenC := setCookie(ctx.Request.Host, jump.CookieToken, token)
-
-	http.SetCookie(ctx.Writer, &keyC)
-	http.SetCookie(ctx.Writer, &tokenC)
 
 	var user *users.User
 	if user, err = p.jump.GetUser(login.ID); err != nil {
