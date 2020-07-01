@@ -12,8 +12,8 @@ github.com/Hatch1fy/errors v0.4.77 h1:0Z2S/nbd+hga+CydwpX5BonUVa338+XPkTSMeZSxhn
 github.com/Hatch1fy/errors v0.4.77/go.mod h1:LPnug0nWT7I99nYl62NfYjxNMCCEx3lBV5YWIco+H0w=
 github.com/Hatch1fy/httpserve v0.4.79 h1:lV4bEUJt8yBTEDUcR8jF4pIu2DzfEMssO2drwX85G0E=
 github.com/Hatch1fy/httpserve v0.4.79/go.mod h1:Joh0lMivmEcEBpImZP2eZjQbr7nSrwdcSH+aLPv05ro=
-github.com/Hatch1fy/jump v0.4.89 h1:9UzI0ObARPZuj+AYqq9+fhTs2LowPNOUAYysahKagC8=
-github.com/Hatch1fy/jump v0.4.89/go.mod h1:vw+z2sb831iHjMO5xoIXvtJF3EBj0N46bx4m9vMu4qs=
+github.com/Hatch1fy/jump v0.4.90 h1:gqq4w8ZyGXy/6YRGSgjCV6eLKm9LysnTKxS7wydYo3c=
+github.com/Hatch1fy/jump v0.4.90/go.mod h1:vw+z2sb831iHjMO5xoIXvtJF3EBj0N46bx4m9vMu4qs=
 github.com/Hatch1fy/logger v0.4.81 h1:ImjnbBEFy0oLu5X4iJUZsmyGSHnLfNTGHmj2+mKBCAU=
 github.com/Hatch1fy/logger v0.4.81/go.mod h1:T+zOS//ETjnmqe4YLDOjyA11/gqRIzTzkdU2Gr4TUfk=
 github.com/Hatch1fy/pgutils v0.4.78 h1:F10Coq0GtwVPN4x35Vqa8Wdf1RLG+2g/hCvZRq1bTX0=
