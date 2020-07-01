@@ -96,3 +96,32 @@ type changePasswordRequest struct {
 	Current string `json:"current"`
 	New     string `json:"new"`
 }
+
+// EnableUser is the handler for enabling a user
+func EnableUser(ctx *httpserve.Context) (res httpserve.Response) {
+	var (
+		userID string
+		err    error
+	)
+
+	if err = p.jump.EnableUser(userID); err != nil {
+		return httpserve.NewJSONResponse(400, err)
+	}
+
+	return httpserve.NewNoContentResponse()
+}
+
+// DisableUser is the handler for disabling a user
+// Note: This will kill all active sessions for this user
+func DisableUser(ctx *httpserve.Context) (res httpserve.Response) {
+	var (
+		userID string
+		err    error
+	)
+
+	if err = p.jump.DisableUser(userID); err != nil {
+		return httpserve.NewJSONResponse(400, err)
+	}
+
+	return httpserve.NewNoContentResponse()
+}
