@@ -6,7 +6,7 @@ import (
 	"github.com/Hatch1fy/errors"
 	"github.com/Hatch1fy/httpserve"
 	"github.com/Hatch1fy/jump/users"
-	core "github.com/Hatch1fy/service-core"
+	core "github.com/gdbu/dbl"
 )
 
 const (
