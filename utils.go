@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Hatch1fy/jump/permissions"
+	"github.com/gdbu/jump/permissions"
 
 	"github.com/Hatch1fy/errors"
 	"github.com/Hatch1fy/httpserve"

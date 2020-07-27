@@ -5,8 +5,8 @@ import (
 
 	"github.com/Hatch1fy/errors"
 	"github.com/Hatch1fy/httpserve"
-	"github.com/Hatch1fy/jump/users"
 	core "github.com/gdbu/dbl"
+	"github.com/gdbu/jump/users"
 )
 
 const (

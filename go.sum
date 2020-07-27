@@ -8,8 +8,6 @@ github.com/Hatch1fy/errors v0.4.78 h1:Xd64lclmP6Gg5i9WFm0wJWkcmf/1rd82DavHTpLVLZ
 github.com/Hatch1fy/errors v0.4.78/go.mod h1:SJFCeScmERvwtYMG7EU24Fe0KfXmiIs7tNlcIl0STKk=
 github.com/Hatch1fy/httpserve v0.4.81 h1:qMAGep0l7+sYvNcl5mlDyQwngh5apdN0Szk9Fssjc3E=
 github.com/Hatch1fy/httpserve v0.4.81/go.mod h1:+WzTr1v8JYFEsP6vg1mZPKwftDEVuNKpk6WlphCAgfk=
-github.com/Hatch1fy/jump v0.4.100 h1:0lgmwS6AxrpG6l7V3t2lhmiQkbo5wWQOAH1VJ1GfgSI=
-github.com/Hatch1fy/jump v0.4.100/go.mod h1:W661QmkW72lmdME0vK5tN1z3yu2mL/P61v2AQ4VjAKI=
 github.com/Hatch1fy/pgutils v0.4.80 h1:BO/4Y5bQpiCaD9KlJxKoutA/ciAA8djnSJpEdPtnqgE=
 github.com/Hatch1fy/pgutils v0.4.80/go.mod h1:oo5EczpiXRdHEVcEjf40Cw+MzDO5ygoL+1uy6n1k7yA=
 github.com/Hatch1fy/uuid v0.4.79 h1:n0IZHDUhXHUU3lwD/Dzo+2cz4dpFEa/24T69iwJ5AUM=
@@ -26,6 +24,8 @@ github.com/gdbu/dbl v0.5.3 h1:zlaJI1TKg422kdl7rytiXWemynqwFi1VvQcpPj8XrMg=
 github.com/gdbu/dbl v0.5.3/go.mod h1:V2gAjGe4uIjB/16Pc8VMLyUz3x0vhH8YKmftj8Q5yNw=
 github.com/gdbu/dbutils v0.5.0 h1:LBUTNLDm5Ba4J9voHMBQreRqT0xHaDZGzdWffo6lxF0=
 github.com/gdbu/dbutils v0.5.0/go.mod h1:OUM3QTtyPnYglV3gTmjUiZQUnTHTnOsVpv1uF/01gu0=
+github.com/gdbu/jump v0.5.1 h1:yaC/MYSZaz/OJh+v/J8KjFwxo1bpuKAOi+MBnAG088k=
+github.com/gdbu/jump v0.5.1/go.mod h1:SqOhTXY8edErJlpA5E6UQ1O0Z7TznRPSUZBZT3Aw2F8=
 github.com/gdbu/logger v0.5.2 h1:4iMqoD7i6kYckVSbk02vTxPHnd7DrcsZxIN0I1onoK8=
 github.com/gdbu/logger v0.5.2/go.mod h1:PYVtTq3wYuB3RikxrVJ3ZDDgMENMKkKiyD0r15XpHt8=
 github.com/gdbu/snapshotter v0.5.1 h1:mPAqUU+pi/h/kpSxzP7FN/HFOotoqLTbtKRKm2wQB/I=

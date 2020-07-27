@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/Hatch1fy/httpserve"
-	"github.com/Hatch1fy/jump/users"
+	"github.com/gdbu/jump/users"
 )
 
 // CreateUserRequest is the request used to create a user
