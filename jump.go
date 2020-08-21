@@ -5,8 +5,8 @@ import (
 
 	"github.com/gdbu/jump/permissions"
 
-	"github.com/Hatch1fy/errors"
 	"github.com/gdbu/jump"
+	"github.com/hatchify/errors"
 
 	"github.com/hatchify/scribe"
 )

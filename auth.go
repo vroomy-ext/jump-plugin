@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 
-	"github.com/Hatch1fy/errors"
 	"github.com/Hatch1fy/httpserve"
 	core "github.com/gdbu/dbl"
 	"github.com/gdbu/jump/users"
+	"github.com/hatchify/errors"
 )
 
 const (
