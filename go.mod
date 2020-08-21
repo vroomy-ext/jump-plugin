@@ -6,7 +6,8 @@ require (
 	github.com/Hatch1fy/httpserve v0.4.87
 	github.com/gdbu/apikeys v0.5.10
 	github.com/gdbu/dbl v0.5.24
-	github.com/gdbu/jump v0.5.13
+	github.com/gdbu/jump v0.5.14
 	github.com/hatchify/errors v0.4.82
 	github.com/hatchify/scribe v0.4.85
+	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899 // indirect
 )
