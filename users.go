@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+
 	"github.com/Hatch1fy/httpserve"
 	"github.com/gdbu/jump/users"
 )
@@ -29,7 +31,8 @@ func CreateUser(ctx *httpserve.Context) (res httpserve.Response) {
 	}
 
 	var resp CreateUserResponse
-	if resp.UserID, resp.APIKey, err = p.jump.CreateUser(req.Email, req.Password, "users"); err != nil {
+	// TODO: use httpserve.Context here (needs PR's on httpserver Context type, out of scope currently)
+	if resp.UserID, resp.APIKey, err = p.jump.CreateUser(context.Background(), req.Email, req.Password, "users"); err != nil {
 		return httpserve.NewJSONResponse(400, err)
 	}
 

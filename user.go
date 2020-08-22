@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+
 	"github.com/Hatch1fy/httpserve"
 	"github.com/gdbu/jump/users"
 )
@@ -41,7 +43,8 @@ func UpdateEmail(ctx *httpserve.Context) (res httpserve.Response) {
 
 	userID := ctx.Param("userID")
 
-	if err = p.jump.UpdateEmail(userID, user.Email); err != nil {
+	// TODO: use httpserve.Context here (needs PR's on httpserver Context type, out of scope currently)
+	if err = p.jump.UpdateEmail(context.Background(), userID, user.Email); err != nil {
 		return httpserve.NewJSONResponse(400, err)
 	}
 
@@ -61,7 +64,8 @@ func UpdatePassword(ctx *httpserve.Context) (res httpserve.Response) {
 
 	userID := ctx.Param("userID")
 
-	if err = p.jump.UpdatePassword(userID, user.Password); err != nil {
+	// TODO: use httpserve.Context here (needs PR's on httpserver Context type, out of scope currently)
+	if err = p.jump.UpdatePassword(context.Background(), userID, user.Password); err != nil {
 		return httpserve.NewJSONResponse(400, err)
 	}
 
@@ -81,11 +85,13 @@ func ChangePassword(ctx *httpserve.Context) (res httpserve.Response) {
 
 	userID := ctx.Param("userID")
 
-	if _, err = p.jump.Users().Match(userID, cpr.Current); err != nil {
+	// TODO: use httpserve.Context here (needs PR's on httpserver Context type, out of scope currently)
+	if _, err = p.jump.Users().Match(context.Background(), userID, cpr.Current); err != nil {
 		return httpserve.NewJSONResponse(400, err)
 	}
 
-	if err = p.jump.UpdatePassword(userID, cpr.New); err != nil {
+	// TODO: use httpserve.Context here (needs PR's on httpserver Context type, out of scope currently)
+	if err = p.jump.UpdatePassword(context.Background(), userID, cpr.New); err != nil {
 		return httpserve.NewJSONResponse(400, err)
 	}
 
@@ -104,7 +110,8 @@ func EnableUser(ctx *httpserve.Context) (res httpserve.Response) {
 		err    error
 	)
 
-	if err = p.jump.EnableUser(userID); err != nil {
+	// TODO: use httpserve.Context here (needs PR's on httpserver Context type, out of scope currently)
+	if err = p.jump.EnableUser(context.Background(), userID); err != nil {
 		return httpserve.NewJSONResponse(400, err)
 	}
 
@@ -119,7 +126,8 @@ func DisableUser(ctx *httpserve.Context) (res httpserve.Response) {
 		err    error
 	)
 
-	if err = p.jump.DisableUser(userID); err != nil {
+	// TODO: use httpserve.Context here (needs PR's on httpserver Context type, out of scope currently)
+	if err = p.jump.DisableUser(context.Background(), userID); err != nil {
 		return httpserve.NewJSONResponse(400, err)
 	}
 

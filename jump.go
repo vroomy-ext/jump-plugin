@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 
 	"github.com/gdbu/jump/permissions"
@@ -62,11 +63,13 @@ func (p *plugin) seed() (err error) {
 
 	// Set initial core permissions for users resource
 	resourceKey := newResourceKey("users", "")
-	if err = p.jump.SetPermission(resourceKey, "users", permissions.ActionNone, permRWD); err != nil {
+	// TODO: use httpserve.Context here (needs PR's on httpserver Context type, out of scope currently)
+	if err = p.jump.SetPermission(context.Background(), resourceKey, "users", permissions.ActionNone, permRWD); err != nil {
 		return
 	}
 
 	// Create a seed user
+	// TODO: use httpserve.Context here (needs PR's on httpserver Context type, out of scope currently)
 	if _, apiKey, err = p.jump.CreateUser("admin", "admin", "users", "admins"); err != nil {
 		return
 	}
