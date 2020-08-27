@@ -11,7 +11,7 @@ const (
 
 // GetUserID will get the ID of the currently logged in user
 func GetUserID(ctx *httpserve.Context) (res httpserve.Response) {
-	return httpserve.NewJSONResponse(200, ctx.Get("userID"))
+	return ctx.NewJSONResponse(200, ctx.Get("userID"))
 }
 
 // GetUser will get a user by ID
@@ -22,10 +22,10 @@ func GetUser(ctx *httpserve.Context) (res httpserve.Response) {
 	)
 
 	if user, err = p.jump.GetUser(ctx.Param("userID")); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		return ctx.NewJSONResponse(400, err)
 	}
 
-	return httpserve.NewJSONResponse(200, user)
+	return ctx.NewJSONResponse(200, user)
 }
 
 // UpdateEmail will update a user's email address
@@ -36,16 +36,16 @@ func UpdateEmail(ctx *httpserve.Context) (res httpserve.Response) {
 	)
 
 	if err = ctx.BindJSON(&user); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		return ctx.NewJSONResponse(400, err)
 	}
 
 	userID := ctx.Param("userID")
 
 	if err = p.jump.UpdateEmail(userID, user.Email); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		return ctx.NewJSONResponse(400, err)
 	}
 
-	return httpserve.NewNoContentResponse()
+	return ctx.NewNoContentResponse()
 }
 
 // UpdatePassword is the update password handler
@@ -56,16 +56,16 @@ func UpdatePassword(ctx *httpserve.Context) (res httpserve.Response) {
 	)
 
 	if err = ctx.BindJSON(&user); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		return ctx.NewJSONResponse(400, err)
 	}
 
 	userID := ctx.Param("userID")
 
 	if err = p.jump.UpdatePassword(userID, user.Password); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		return ctx.NewJSONResponse(400, err)
 	}
 
-	return httpserve.NewNoContentResponse()
+	return ctx.NewNoContentResponse()
 }
 
 // ChangePassword accepts current, new, and confirm password fields
@@ -76,20 +76,20 @@ func ChangePassword(ctx *httpserve.Context) (res httpserve.Response) {
 	)
 
 	if err = ctx.BindJSON(&cpr); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		return ctx.NewJSONResponse(400, err)
 	}
 
 	userID := ctx.Param("userID")
 
 	if _, err = p.jump.Users().Match(userID, cpr.Current); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		return ctx.NewJSONResponse(400, err)
 	}
 
 	if err = p.jump.UpdatePassword(userID, cpr.New); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		return ctx.NewJSONResponse(400, err)
 	}
 
-	return httpserve.NewNoContentResponse()
+	return ctx.NewNoContentResponse()
 }
 
 type changePasswordRequest struct {
@@ -105,10 +105,10 @@ func EnableUser(ctx *httpserve.Context) (res httpserve.Response) {
 	)
 
 	if err = p.jump.EnableUser(userID); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		return ctx.NewJSONResponse(400, err)
 	}
 
-	return httpserve.NewNoContentResponse()
+	return ctx.NewNoContentResponse()
 }
 
 // DisableUser is the handler for disabling a user
@@ -120,8 +120,8 @@ func DisableUser(ctx *httpserve.Context) (res httpserve.Response) {
 	)
 
 	if err = p.jump.DisableUser(userID); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		return ctx.NewJSONResponse(400, err)
 	}
 
-	return httpserve.NewNoContentResponse()
+	return ctx.NewNoContentResponse()
 }

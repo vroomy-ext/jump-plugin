@@ -25,15 +25,15 @@ func CreateUser(ctx *httpserve.Context) (res httpserve.Response) {
 	)
 
 	if err = ctx.BindJSON(&req); err != nil {
-		httpserve.NewJSONResponse(400, err)
+		ctx.NewJSONResponse(400, err)
 	}
 
 	var resp CreateUserResponse
 	if resp.UserID, resp.APIKey, err = p.jump.CreateUser(req.Email, req.Password, "users"); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		return ctx.NewJSONResponse(400, err)
 	}
 
-	return httpserve.NewJSONResponse(200, resp)
+	return ctx.NewJSONResponse(200, resp)
 }
 
 // GetUsersList will get the current users list
@@ -44,8 +44,8 @@ func GetUsersList(ctx *httpserve.Context) (res httpserve.Response) {
 	)
 
 	if us, err = p.jump.GetUsersList(); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		return ctx.NewJSONResponse(400, err)
 	}
 
-	return httpserve.NewJSONResponse(200, us)
+	return ctx.NewJSONResponse(200, us)
 }

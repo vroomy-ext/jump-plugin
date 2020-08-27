@@ -13,8 +13,8 @@ func GetAPIKeysByUser(ctx *httpserve.Context) (res httpserve.Response) {
 	)
 
 	if as, err = p.jump.GetAPIKeysByUser(ctx.Param("userID")); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		return ctx.NewJSONResponse(400, err)
 	}
 
-	return httpserve.NewJSONResponse(200, as)
+	return ctx.NewJSONResponse(200, as)
 }
