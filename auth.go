@@ -7,6 +7,8 @@ import (
 	core "github.com/gdbu/dbl"
 	"github.com/gdbu/jump/users"
 	"github.com/hatchify/errors"
+
+	vroomy "github.com/vroomy/common"
 )
 
 const (
@@ -15,7 +17,7 @@ const (
 )
 
 // Login is the login handler
-func Login(ctx *httpserve.Context) (res httpserve.Response) {
+func Login(ctx vroomy.Context) (res httpserve.Response) {
 	var (
 		login users.User
 		err   error
@@ -43,7 +45,7 @@ func Login(ctx *httpserve.Context) (res httpserve.Response) {
 }
 
 // Logout is the logout handler
-func Logout(ctx *httpserve.Context) (res httpserve.Response) {
+func Logout(ctx vroomy.Context) (res httpserve.Response) {
 	var err error
 	if err = p.jump.Logout(ctx); err != nil {
 		return httpserve.NewJSONResponse(400, err)
