@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/Hatch1fy/httpserve"
 	"github.com/gdbu/jump/users"
+	"github.com/vroomy/httpserve"
 )
 
 const (

@@ -5,9 +5,8 @@ import (
 	"strings"
 
 	"github.com/gdbu/jump/permissions"
-
-	"github.com/Hatch1fy/httpserve"
 	"github.com/hatchify/errors"
+	"github.com/vroomy/httpserve"
 )
 
 func newResourceKey(name, userID string) (resourceKey string) {
