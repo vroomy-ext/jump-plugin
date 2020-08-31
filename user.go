@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gdbu/jump/users"
-	"github.com/vroomy/httpserve"
+	vroomy "github.com/vroomy/common"
 )
 
 const (
@@ -10,12 +10,12 @@ const (
 )
 
 // GetUserID will get the ID of the currently logged in user
-func GetUserID(ctx *httpserve.Context) (res httpserve.Response) {
+func GetUserID(ctx vroomy.Context) (res vroomy.Response) {
 	return ctx.NewJSONResponse(200, ctx.Get("userID"))
 }
 
 // GetUser will get a user by ID
-func GetUser(ctx *httpserve.Context) (res httpserve.Response) {
+func GetUser(ctx vroomy.Context) (res vroomy.Response) {
 	var (
 		user *users.User
 		err  error
@@ -29,7 +29,7 @@ func GetUser(ctx *httpserve.Context) (res httpserve.Response) {
 }
 
 // UpdateEmail will update a user's email address
-func UpdateEmail(ctx *httpserve.Context) (res httpserve.Response) {
+func UpdateEmail(ctx vroomy.Context) (res vroomy.Response) {
 	var (
 		user users.User
 		err  error
@@ -49,7 +49,7 @@ func UpdateEmail(ctx *httpserve.Context) (res httpserve.Response) {
 }
 
 // UpdatePassword is the update password handler
-func UpdatePassword(ctx *httpserve.Context) (res httpserve.Response) {
+func UpdatePassword(ctx vroomy.Context) (res vroomy.Response) {
 	var (
 		user users.User
 		err  error
@@ -69,7 +69,7 @@ func UpdatePassword(ctx *httpserve.Context) (res httpserve.Response) {
 }
 
 // ChangePassword accepts current, new, and confirm password fields
-func ChangePassword(ctx *httpserve.Context) (res httpserve.Response) {
+func ChangePassword(ctx vroomy.Context) (res vroomy.Response) {
 	var (
 		cpr changePasswordRequest
 		err error
@@ -98,7 +98,7 @@ type changePasswordRequest struct {
 }
 
 // EnableUser is the handler for enabling a user
-func EnableUser(ctx *httpserve.Context) (res httpserve.Response) {
+func EnableUser(ctx vroomy.Context) (res vroomy.Response) {
 	var (
 		userID string
 		err    error
@@ -113,7 +113,7 @@ func EnableUser(ctx *httpserve.Context) (res httpserve.Response) {
 
 // DisableUser is the handler for disabling a user
 // Note: This will kill all active sessions for this user
-func DisableUser(ctx *httpserve.Context) (res httpserve.Response) {
+func DisableUser(ctx vroomy.Context) (res vroomy.Response) {
 	var (
 		userID string
 		err    error

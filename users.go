@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gdbu/jump/users"
-	"github.com/vroomy/httpserve"
+	vroomy "github.com/vroomy/common"
 )
 
 // CreateUserRequest is the request used to create a user
@@ -18,7 +18,7 @@ type CreateUserResponse struct {
 }
 
 // CreateUser is a handler for creating a new user
-func CreateUser(ctx *httpserve.Context) (res httpserve.Response) {
+func CreateUser(ctx vroomy.Context) (res vroomy.Response) {
 	var (
 		req CreateUserRequest
 		err error
@@ -37,7 +37,7 @@ func CreateUser(ctx *httpserve.Context) (res httpserve.Response) {
 }
 
 // GetUsersList will get the current users list
-func GetUsersList(ctx *httpserve.Context) (res httpserve.Response) {
+func GetUsersList(ctx vroomy.Context) (res vroomy.Response) {
 	var (
 		us  []*users.User
 		err error

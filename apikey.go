@@ -2,11 +2,11 @@ package main
 
 import (
 	"github.com/gdbu/apikeys"
-	"github.com/vroomy/httpserve"
+	vroomy "github.com/vroomy/common"
 )
 
 // GetAPIKeysByUser is the handler for retrieving the api keys for a user
-func GetAPIKeysByUser(ctx *httpserve.Context) (res httpserve.Response) {
+func GetAPIKeysByUser(ctx vroomy.Context) (res vroomy.Response) {
 	var (
 		as  []*apikeys.APIKey
 		err error
