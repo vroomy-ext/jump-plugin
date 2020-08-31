@@ -9,5 +9,5 @@ require (
 	github.com/hatchify/errors v0.4.82
 	github.com/hatchify/scribe v0.4.85
 	github.com/vroomy/common v0.1.6
-	github.com/vroomy/httpserve v0.4.91
+	github.com/vroomy/httpserve v0.4.92
 )
