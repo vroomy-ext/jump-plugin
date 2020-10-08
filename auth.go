@@ -7,7 +7,7 @@ import (
 	"github.com/gdbu/jump/users"
 	"github.com/hatchify/errors"
 
-	vroomy "github.com/vroomy/common"
+	"github.com/vroomy/httpserve"
 )
 
 const (
@@ -16,14 +16,14 @@ const (
 )
 
 // Login is the login handler
-func Login(ctx vroomy.Context) (res vroomy.Response) {
+func Login(ctx *httpserve.Context) (res httpserve.Response) {
 	var (
 		login users.User
 		err   error
 	)
 
 	if err = ctx.BindJSON(&login); err != nil {
-		return ctx.NewJSONResponse(400, err)
+		return httpserve.NewJSONResponse(400, err)
 	}
 
 	if login.ID, err = p.jump.Login(ctx, login.Email, login.Password); err != nil {
@@ -31,23 +31,23 @@ func Login(ctx vroomy.Context) (res vroomy.Response) {
 			err = ErrNoLoginFound
 		}
 
-		return ctx.NewJSONResponse(400, err)
+		return httpserve.NewJSONResponse(400, err)
 	}
 
 	var user *users.User
 	if user, err = p.jump.GetUser(login.ID); err != nil {
 		err = fmt.Errorf("error getting user %s: %v", login.ID, err)
-		return ctx.NewJSONResponse(400, err)
+		return httpserve.NewJSONResponse(400, err)
 	}
 
-	return ctx.NewJSONResponse(200, user)
+	return httpserve.NewJSONResponse(200, user)
 }
 
 // Logout is the logout handler
-func Logout(ctx vroomy.Context) (res vroomy.Response) {
+func Logout(ctx *httpserve.Context) (res httpserve.Response) {
 	var err error
 	if err = p.jump.Logout(ctx); err != nil {
-		return ctx.NewJSONResponse(400, err)
+		return httpserve.NewJSONResponse(400, err)
 	}
 
 	return ctx.NewNoContentResponse()

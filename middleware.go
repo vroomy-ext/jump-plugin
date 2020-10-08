@@ -1,12 +1,10 @@
 package main
 
-import (
-	vroomy "github.com/vroomy/common"
-)
+import "github.com/vroomy/httpserve"
 
 // SetUserMW is will check user permissions. Expects the following arguments:
 //	- redirectOnFail (e.g. false)
-func SetUserMW(args ...string) (h vroomy.Handler, err error) {
+func SetUserMW(args ...string) (h httpserve.Handler, err error) {
 	var redirectOnFail bool
 	switch len(args) {
 	case 1:
@@ -25,7 +23,7 @@ func SetUserMW(args ...string) (h vroomy.Handler, err error) {
 // CheckPermissionsMW is will check user permissions. Expects the following arguments:
 //	- groupName (e.g. users)
 //	- paramKey (e.g. userID)
-func CheckPermissionsMW(args ...string) (h vroomy.Handler, err error) {
+func CheckPermissionsMW(args ...string) (h httpserve.Handler, err error) {
 	var resourceName, paramKey string
 	switch len(args) {
 	case 1:
@@ -46,7 +44,7 @@ func CheckPermissionsMW(args ...string) (h vroomy.Handler, err error) {
 // GrantPermissionsMW is will grant user permissions. Expects the following arguments:
 //	- groupName (e.g. users)
 //	- paramKey (e.g. userID)
-func GrantPermissionsMW(args ...string) (h vroomy.Handler, err error) {
+func GrantPermissionsMW(args ...string) (h httpserve.Handler, err error) {
 	if len(args) != 3 {
 		err = ErrInvalidGrantPermissionsArguments
 		return
