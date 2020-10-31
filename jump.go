@@ -6,9 +6,8 @@ import (
 	"github.com/gdbu/jump/permissions"
 
 	"github.com/gdbu/jump"
+	"github.com/gdbu/scribe"
 	"github.com/hatchify/errors"
-
-	"github.com/hatchify/scribe"
 )
 
 const (
