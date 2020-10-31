@@ -8,5 +8,5 @@ require (
 	github.com/gdbu/jump v0.7.1
 	github.com/hatchify/errors v0.4.82
 	github.com/hatchify/scribe v0.4.87
-	github.com/vroomy/httpserve v0.5.0
+	github.com/vroomy/httpserve v0.5.1
 )
