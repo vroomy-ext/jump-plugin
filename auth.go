@@ -22,8 +22,21 @@ func Login(ctx *httpserve.Context) (res httpserve.Response) {
 		err   error
 	)
 
-	if err = ctx.BindJSON(&login); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+	contentType := ctx.Request.Header.Get("Content-Type")
+	switch contentType {
+	case "application/x-www-form-urlencoded":
+		if err := ctx.Request.ParseForm(); err != nil {
+			err = fmt.Errorf("error parsing form: %v", err)
+			return httpserve.NewHTMLResponse(400, []byte(err.Error()))
+		}
+
+		login.Email = ctx.Request.Form.Get("email")
+		login.Password = ctx.Request.Form.Get("password")
+
+	default:
+		if err = ctx.BindJSON(&login); err != nil {
+			return httpserve.NewJSONResponse(400, err)
+		}
 	}
 
 	if login.ID, err = p.jump.Login(ctx, login.Email, login.Password); err != nil {
@@ -31,15 +44,18 @@ func Login(ctx *httpserve.Context) (res httpserve.Response) {
 			err = ErrNoLoginFound
 		}
 
+		// TODO: Respond differently based on content type
 		return httpserve.NewJSONResponse(400, err)
 	}
 
 	var user *users.User
 	if user, err = p.jump.GetUser(login.ID); err != nil {
 		err = fmt.Errorf("error getting user %s: %v", login.ID, err)
+		// TODO: Respond differently based on content type
 		return httpserve.NewJSONResponse(400, err)
 	}
 
+	// TODO: Respond differently based on content type
 	return httpserve.NewJSONResponse(200, user)
 }
 
