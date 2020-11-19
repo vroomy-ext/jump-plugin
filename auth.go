@@ -55,6 +55,15 @@ func Login(ctx *httpserve.Context) (res httpserve.Response) {
 		return httpserve.NewJSONResponse(400, err)
 	}
 
+	// Grab url values from request
+	q := ctx.Request.URL.Query()
+
+	// Check to see if redirect query value has been set
+	if redirect := q.Get("redirect"); len(redirect) > 0 {
+		// Client is expecting a redirect on success, return 302 to provided value
+		return httpserve.NewRedirectResponse(302, redirect)
+	}
+
 	// TODO: Respond differently based on content type
 	return httpserve.NewJSONResponse(200, user)
 }
