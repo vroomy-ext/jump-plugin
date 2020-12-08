@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	core "github.com/gdbu/dbl"
 	"github.com/gdbu/jump/users"
 	"github.com/hatchify/errors"
+	"github.com/mojura/mojura"
 
 	"github.com/vroomy/httpserve"
 )
@@ -40,7 +40,7 @@ func Login(ctx *httpserve.Context) (res httpserve.Response) {
 	}
 
 	if login.ID, err = p.jump.Login(ctx, login.Email, login.Password); err != nil {
-		if err == core.ErrEntryNotFound {
+		if err == mojura.ErrEntryNotFound {
 			err = ErrNoLoginFound
 		}
 
