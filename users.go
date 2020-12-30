@@ -33,6 +33,9 @@ func CreateUser(ctx *httpserve.Context) (res httpserve.Response) {
 		return httpserve.NewJSONResponse(400, err)
 	}
 
+	// Set createdUserID field
+	ctx.Put("createdUserID", resp.UserID)
+
 	return httpserve.NewJSONResponse(200, resp)
 }
 
