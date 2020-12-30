@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/gdbu/apikeys"
+	"github.com/gdbu/jump/apikeys"
 	"github.com/vroomy/httpserve"
 )
 
