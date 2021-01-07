@@ -7,8 +7,8 @@ import (
 
 // CreateUserRequest is the request used to create a user
 type CreateUserRequest struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Email    string `json:"email" form:"email"`
+	Password string `json:"password,omitempty" form:"password"`
 }
 
 // CreateUserResponse is returned after a user is created
@@ -24,7 +24,7 @@ func CreateUser(ctx *httpserve.Context) (res httpserve.Response) {
 		err error
 	)
 
-	if err = ctx.BindJSON(&req); err != nil {
+	if err = ctx.Bind(&req); err != nil {
 		httpserve.NewJSONResponse(400, err)
 	}
 
