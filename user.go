@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gdbu/jump/users"
-	"github.com/vroomy/httpserve"
+	"github.com/vroomy/common"
 )
 
 const (
@@ -10,86 +10,96 @@ const (
 )
 
 // GetUserID will get the ID of the currently logged in user
-func GetUserID(ctx *httpserve.Context) (res httpserve.Response) {
-	return httpserve.NewJSONResponse(200, ctx.Get("userID"))
+func GetUserID(ctx common.Context) {
+	ctx.WriteJSON(200, ctx.Get("userID"))
+	return
 }
 
 // GetUser will get a user by ID
-func GetUser(ctx *httpserve.Context) (res httpserve.Response) {
+func GetUser(ctx common.Context) {
 	var (
 		user *users.User
 		err  error
 	)
 
 	if user, err = p.jump.GetUser(ctx.Param("userID")); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		ctx.WriteJSON(400, err)
+		return
 	}
 
-	return httpserve.NewJSONResponse(200, user)
+	ctx.WriteJSON(200, user)
+	return
 }
 
 // UpdateEmail will update a user's email address
-func UpdateEmail(ctx *httpserve.Context) (res httpserve.Response) {
+func UpdateEmail(ctx common.Context) {
 	var (
 		user users.User
 		err  error
 	)
 
-	if err = ctx.BindJSON(&user); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+	if err = ctx.Bind(&user); err != nil {
+		ctx.WriteJSON(400, err)
+		return
 	}
 
 	userID := ctx.Param("userID")
 
 	if err = p.jump.UpdateEmail(userID, user.Email); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		ctx.WriteJSON(400, err)
+		return
 	}
 
-	return ctx.NewNoContentResponse()
+	ctx.WriteNoContent()
 }
 
 // UpdatePassword is the update password handler
-func UpdatePassword(ctx *httpserve.Context) (res httpserve.Response) {
+func UpdatePassword(ctx common.Context) {
 	var (
 		user users.User
 		err  error
 	)
 
-	if err = ctx.BindJSON(&user); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+	if err = ctx.Bind(&user); err != nil {
+		ctx.WriteJSON(400, err)
+		return
 	}
 
 	userID := ctx.Param("userID")
 
 	if err = p.jump.UpdatePassword(userID, user.Password); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		ctx.WriteJSON(400, err)
+		return
 	}
 
-	return ctx.NewNoContentResponse()
+	ctx.WriteNoContent()
 }
 
 // ChangePassword accepts current, new, and confirm password fields
-func ChangePassword(ctx *httpserve.Context) (res httpserve.Response) {
+func ChangePassword(ctx common.Context) {
 	var (
 		cpr changePasswordRequest
 		err error
 	)
 
-	if err = ctx.BindJSON(&cpr); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+	if err = ctx.Bind(&cpr); err != nil {
+		ctx.WriteJSON(400, err)
+		return
 	}
 
 	userID := ctx.Param("userID")
 
 	if _, err = p.jump.Users().Match(userID, cpr.Current); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		ctx.WriteJSON(400, err)
+		return
 	}
 
 	if err = p.jump.UpdatePassword(userID, cpr.New); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		ctx.WriteJSON(400, err)
+		return
 	}
 
-	return ctx.NewNoContentResponse()
+	ctx.WriteNoContent()
 }
 
 type changePasswordRequest struct {
@@ -98,30 +108,32 @@ type changePasswordRequest struct {
 }
 
 // EnableUser is the handler for enabling a user
-func EnableUser(ctx *httpserve.Context) (res httpserve.Response) {
+func EnableUser(ctx common.Context) {
 	var (
 		userID string
 		err    error
 	)
 
 	if err = p.jump.EnableUser(userID); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		ctx.WriteJSON(400, err)
+		return
 	}
 
-	return ctx.NewNoContentResponse()
+	ctx.WriteNoContent()
 }
 
 // DisableUser is the handler for disabling a user
 // Note: This will kill all active sessions for this user
-func DisableUser(ctx *httpserve.Context) (res httpserve.Response) {
+func DisableUser(ctx common.Context) {
 	var (
 		userID string
 		err    error
 	)
 
 	if err = p.jump.DisableUser(userID); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		ctx.WriteJSON(400, err)
+		return
 	}
 
-	return ctx.NewNoContentResponse()
+	ctx.WriteNoContent()
 }

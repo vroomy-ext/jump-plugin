@@ -6,7 +6,7 @@ import (
 
 	"github.com/gdbu/jump/permissions"
 	"github.com/hatchify/errors"
-	"github.com/vroomy/httpserve"
+	"github.com/vroomy/common"
 )
 
 func newResourceKey(name, userID string) (resourceKey string) {
@@ -17,7 +17,7 @@ func newResourceKey(name, userID string) (resourceKey string) {
 	return fmt.Sprintf("%s::%s", name, userID)
 }
 
-func getUserID(ctx *httpserve.Context) (userID string, err error) {
+func getUserID(ctx common.Context) (userID string, err error) {
 	if userID = ctx.Get("userID"); len(userID) == 0 {
 		err = errors.Error("cannot assert permissions, userID is empty")
 		return
@@ -26,8 +26,8 @@ func getUserID(ctx *httpserve.Context) (userID string, err error) {
 	return
 }
 
-func getAPIKey(ctx *httpserve.Context) (apiKey string) {
-	q := ctx.Request.URL.Query()
+func getAPIKey(ctx common.Context) (apiKey string) {
+	q := ctx.Request().URL.Query()
 
 	if apiKey = q.Get("apiKey"); len(apiKey) > 0 {
 		return
@@ -38,7 +38,7 @@ func getAPIKey(ctx *httpserve.Context) (apiKey string) {
 		ok   bool
 	)
 
-	if vals, ok = ctx.Request.Header["X-Api-Key"]; !ok {
+	if vals, ok = ctx.Request().Header["X-Api-Key"]; !ok {
 		return
 	}
 

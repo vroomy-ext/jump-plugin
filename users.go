@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/gdbu/jump/users"
-	"github.com/vroomy/httpserve"
+	"github.com/vroomy/common"
 )
 
 // CreateUserRequest is the request used to create a user
@@ -18,37 +20,51 @@ type CreateUserResponse struct {
 }
 
 // CreateUser is a handler for creating a new user
-func CreateUser(ctx *httpserve.Context) (res httpserve.Response) {
+func CreateUser(ctx common.Context) {
 	var (
 		req CreateUserRequest
 		err error
 	)
 
 	if err = ctx.Bind(&req); err != nil {
-		httpserve.NewJSONResponse(400, err)
+		ctx.WriteJSON(400, err)
+		return
 	}
+
+	fmt.Println("REQ?", req, err)
 
 	var resp CreateUserResponse
 	if resp.UserID, resp.APIKey, err = p.jump.CreateUser(req.Email, req.Password, "users"); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		ctx.WriteJSON(400, err)
+		return
 	}
 
 	// Set createdUserID field
 	ctx.Put("createdUserID", resp.UserID)
 
-	return httpserve.NewJSONResponse(200, resp)
+	// Grab url values from request
+	q := ctx.Request().URL.Query()
+
+	// Check to see if redirect query value has been set
+	if redirect := q.Get("redirect"); len(redirect) > 0 {
+		ctx.Redirect(302, redirect)
+		return
+	}
+
+	ctx.WriteJSON(200, resp)
 }
 
 // GetUsersList will get the current users list
-func GetUsersList(ctx *httpserve.Context) (res httpserve.Response) {
+func GetUsersList(ctx common.Context) {
 	var (
 		us  []*users.User
 		err error
 	)
 
 	if us, err = p.jump.GetUsersList(); err != nil {
-		return httpserve.NewJSONResponse(400, err)
+		ctx.WriteJSON(400, err)
+		return
 	}
 
-	return httpserve.NewJSONResponse(200, us)
+	ctx.WriteJSON(200, us)
 }
