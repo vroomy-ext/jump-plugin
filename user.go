@@ -109,11 +109,8 @@ type changePasswordRequest struct {
 
 // EnableUser is the handler for enabling a user
 func EnableUser(ctx common.Context) {
-	var (
-		userID string
-		err    error
-	)
-
+	var err error
+	userID := ctx.Param("userID")
 	if err = p.jump.EnableUser(userID); err != nil {
 		ctx.WriteJSON(400, err)
 		return
@@ -125,11 +122,8 @@ func EnableUser(ctx common.Context) {
 // DisableUser is the handler for disabling a user
 // Note: This will kill all active sessions for this user
 func DisableUser(ctx common.Context) {
-	var (
-		userID string
-		err    error
-	)
-
+	var err error
+	userID := ctx.Param("userID")
 	if err = p.jump.DisableUser(userID); err != nil {
 		ctx.WriteJSON(400, err)
 		return
@@ -140,11 +134,8 @@ func DisableUser(ctx common.Context) {
 
 // VerifyUser is the handler for verifying a user
 func VerifyUser(ctx common.Context) {
-	var (
-		userID string
-		err    error
-	)
-
+	var err error
+	userID := ctx.Param("userID")
 	if err = p.jump.VerifyUser(userID); err != nil {
 		ctx.WriteJSON(400, err)
 		return
