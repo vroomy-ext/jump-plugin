@@ -54,6 +54,66 @@ func CreateUser(ctx common.Context) {
 	ctx.WriteJSON(200, resp)
 }
 
+// SignUp is a handler for a self sign-up for a new user
+func SignUp(ctx common.Context) {
+	var (
+		req CreateUserRequest
+		err error
+	)
+
+	if err = ctx.Bind(&req); err != nil {
+		ctx.WriteJSON(400, err)
+		return
+	}
+
+	var resp CreateUserResponse
+	if resp.UserID, resp.APIKey, err = p.jump.CreateUser(req.Email, req.Password, "users"); err != nil {
+		ctx.WriteJSON(400, err)
+		return
+	}
+
+	// Set createdUserID field
+	ctx.Put("createdUserID", resp.UserID)
+
+	// Grab url values from request
+	q := ctx.Request().URL.Query()
+
+	// Check to see if redirect query value has been set
+	if redirect := q.Get("redirect"); len(redirect) > 0 {
+		ctx.Redirect(302, redirect)
+		return
+	}
+
+	ctx.WriteJSON(200, resp)
+}
+
+func createUser(ctx common.Context) (resp CreateUserResponse, err error) {
+	var req CreateUserRequest
+	if err = ctx.Bind(&req); err != nil {
+		ctx.WriteJSON(400, err)
+		return
+	}
+
+	if resp.UserID, resp.APIKey, err = p.jump.CreateUser(req.Email, req.Password, "users"); err != nil {
+		ctx.WriteJSON(400, err)
+		return
+	}
+
+	// Set createdUserID field
+	ctx.Put("createdUserID", resp.UserID)
+
+	// Grab url values from request
+	q := ctx.Request().URL.Query()
+
+	// Check to see if redirect query value has been set
+	if redirect := q.Get("redirect"); len(redirect) > 0 {
+		ctx.Redirect(302, redirect)
+		return
+	}
+
+	return
+}
+
 // GetUsersList will get the current users list
 func GetUsersList(ctx common.Context) {
 	var (
