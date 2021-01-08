@@ -137,3 +137,18 @@ func DisableUser(ctx common.Context) {
 
 	ctx.WriteNoContent()
 }
+
+// VerifyUser is the handler for verifying a user
+func VerifyUser(ctx common.Context) {
+	var (
+		userID string
+		err    error
+	)
+
+	if err = p.jump.VerifyUser(userID); err != nil {
+		ctx.WriteJSON(400, err)
+		return
+	}
+
+	ctx.WriteNoContent()
+}
