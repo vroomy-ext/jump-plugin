@@ -6,9 +6,18 @@ import (
 
 // SetUserMW is will check user permissions. Expects the following arguments:
 //	- redirectOnFail (e.g. false)
+//	- allowNonLoggedIn (e.g. false)
 func SetUserMW(args ...string) (h common.Handler, err error) {
-	var redirectOnFail bool
+	var (
+		redirectOnFail   bool
+		allowNonLoggedIn bool
+	)
+
 	switch len(args) {
+	case 2:
+		redirectOnFail = args[0] == "true"
+		allowNonLoggedIn = args[1] == "true"
+
 	case 1:
 		redirectOnFail = args[0] == "true"
 	case 0:
@@ -18,7 +27,7 @@ func SetUserMW(args ...string) (h common.Handler, err error) {
 		return
 	}
 
-	h = p.jump.NewSetUserIDMW(redirectOnFail)
+	h = p.jump.NewSetUserIDMW(redirectOnFail, allowNonLoggedIn)
 	return
 }
 
