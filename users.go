@@ -45,28 +45,14 @@ func CreateUserMW(ctx common.Context) {
 // SignUp is a handler for a self sign-up for a new user
 func SignUp(ctx common.Context) {
 	var (
-		req CreateUserRequest
-		err error
+		resp CreateUserResponse
+		err  error
 	)
 
-	if err = ctx.Bind(&req); err != nil {
+	if resp, err = createUser(ctx); err != nil {
 		ctx.WriteJSON(400, err)
 		return
 	}
-
-	if err = emailvalidator.Validate(req.Email); err != nil {
-		ctx.WriteJSON(400, err)
-		return
-	}
-
-	var resp CreateUserResponse
-	if resp.UserID, resp.APIKey, err = p.jump.CreateUser(req.Email, req.Password, "users"); err != nil {
-		ctx.WriteJSON(400, err)
-		return
-	}
-
-	// Set createdUserID field
-	ctx.Put("createdUserID", resp.UserID)
 
 	// Grab url values from request
 	q := ctx.Request().URL.Query()
@@ -83,6 +69,11 @@ func SignUp(ctx common.Context) {
 func createUser(ctx common.Context) (resp CreateUserResponse, err error) {
 	var req CreateUserRequest
 	if err = ctx.Bind(&req); err != nil {
+		return
+	}
+
+	if err = emailvalidator.Validate(req.Email); err != nil {
+		ctx.WriteJSON(400, err)
 		return
 	}
 
