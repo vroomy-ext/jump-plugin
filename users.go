@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gdbu/emailvalidator"
 	"github.com/gdbu/jump/users"
 	"github.com/vroomy/common"
 )
@@ -49,6 +50,11 @@ func SignUp(ctx common.Context) {
 	)
 
 	if err = ctx.Bind(&req); err != nil {
+		ctx.WriteJSON(400, err)
+		return
+	}
+
+	if err = emailvalidator.Validate(req.Email); err != nil {
 		ctx.WriteJSON(400, err)
 		return
 	}

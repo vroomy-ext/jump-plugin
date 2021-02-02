@@ -3,6 +3,7 @@ module github.com/vroomy-ext/jump-plugin
 go 1.14
 
 require (
+	github.com/gdbu/emailvalidator v0.5.0
 	github.com/gdbu/jump v0.12.3
 	github.com/gdbu/scribe v0.4.88
 	github.com/hatchify/errors v0.4.82
