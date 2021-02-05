@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/gdbu/jump/permissions"
@@ -67,6 +68,12 @@ func (p *plugin) seed() (err error) {
 
 	// Create a seed user
 	if _, apiKey, err = p.jump.CreateUser("admin", "admin", "users", "admins"); err != nil {
+		err = fmt.Errorf("error creating admin user: %v", err)
+		return
+	}
+
+	if err = p.jump.Users().UpdateVerified("00000000", true); err != nil {
+		err = fmt.Errorf("error verifying admin user: %v", err)
 		return
 	}
 
