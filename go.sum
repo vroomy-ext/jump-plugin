@@ -12,8 +12,8 @@ github.com/gdbu/emailvalidator v0.5.0 h1:7jpY38G/TXF0fLEZW9ggTEcsVMkal1cQV+tNxYZ
 github.com/gdbu/emailvalidator v0.5.0/go.mod h1:HnJrQeKJx/v22EM/vBMa8rChopzyQWpLTl4Rmaocoag=
 github.com/gdbu/indexer v0.1.4 h1:syicXPfyKMvEip60fvmDf7dTVyL2/8J8G4twOKM2oBg=
 github.com/gdbu/indexer v0.1.4/go.mod h1:JU3TEHiWnPt8vc7nvF00jhLGNgV8Y0E9vW+QnaTHyT8=
-github.com/gdbu/jump v0.12.13 h1:2CX4xs9ih7WglaYDjiuMc9jGKC0xz8sewK1nvJxK7Sg=
-github.com/gdbu/jump v0.12.13/go.mod h1:kAE99F0d1MJIgyCU+6N3Cz9Tu4yQlTc26ruHOzeyNzc=
+github.com/gdbu/jump v0.12.14 h1:BXZl76nRjIaCnsECgUPLzmAkRrNwbTu30L+YxGk5Jf0=
+github.com/gdbu/jump v0.12.14/go.mod h1:kAE99F0d1MJIgyCU+6N3Cz9Tu4yQlTc26ruHOzeyNzc=
 github.com/gdbu/logger v0.6.2 h1:I82k0Fg0ZsOy1rsTjdt0zcD69kJPTtPRZfKOvOgguxg=
 github.com/gdbu/logger v0.6.2/go.mod h1:YweE95qrjYqXm7wA/Uf3NW2ueFiNOtLDzktneVpe5kQ=
 github.com/gdbu/scribe v0.5.3 h1:kWkkE8p3iLB2CuReTTLKBYnRx4OTMZpDJTO2Z0xZ0WE=
