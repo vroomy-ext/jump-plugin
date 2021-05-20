@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"github.com/vroomy/common"
 )
 
@@ -38,7 +40,7 @@ func SSOMultiLogin(ctx common.Context) {
 	loginCode := ctx.Param("loginCode")
 
 	// Attempt to login with code
-	if err = p.jump.SSOMultiLogin(ctx, loginCode); err != nil {
+	if err = p.jump.SSOMultiLogin(ctx, loginCode, time.Minute*5); err != nil {
 		ctx.WriteJSON(400, err)
 		return
 	}
