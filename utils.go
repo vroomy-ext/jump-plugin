@@ -5,8 +5,6 @@ import (
 	"strings"
 
 	"github.com/gdbu/jump/permissions"
-	"github.com/hatchify/errors"
-	"github.com/vroomy/common"
 )
 
 func newResourceKey(name, userID string) (resourceKey string) {
@@ -17,43 +15,10 @@ func newResourceKey(name, userID string) (resourceKey string) {
 	return fmt.Sprintf("%s::%s", name, userID)
 }
 
-func getUserID(ctx common.Context) (userID string, err error) {
-	if userID = ctx.Get("userID"); len(userID) == 0 {
-		err = errors.Error("cannot assert permissions, userID is empty")
-		return
-	}
-
-	return
-}
-
-func getAPIKey(ctx common.Context) (apiKey string) {
-	q := ctx.Request().URL.Query()
-
-	if apiKey = q.Get("apiKey"); len(apiKey) > 0 {
-		return
-	}
-
-	var (
-		vals []string
-		ok   bool
-	)
-
-	if vals, ok = ctx.Request().Header["X-Api-Key"]; !ok {
-		return
-	}
-
-	if len(vals) == 0 {
-		return
-	}
-
-	apiKey = vals[0]
-	return
-}
-
 func getPermissions(permsStr string) (a permissions.Action) {
-	hasRead := strings.Index(permsStr, "r") > -1
-	hasWrite := strings.Index(permsStr, "w") > -1
-	hasDelete := strings.Index(permsStr, "d") > -1
+	hasRead := strings.Contains(permsStr, "r")
+	hasWrite := strings.Contains(permsStr, "w")
+	hasDelete := strings.Contains(permsStr, "d")
 
 	if hasRead {
 		a |= permissions.ActionRead

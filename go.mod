@@ -9,4 +9,5 @@ require (
 	github.com/hatchify/errors v0.4.82
 	github.com/mojura/mojura v0.10.6
 	github.com/vroomy/common v0.5.2
+	github.com/vroomy/plugins v0.6.0
 )

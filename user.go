@@ -5,18 +5,13 @@ import (
 	"github.com/vroomy/common"
 )
 
-const (
-	errPasswordsDontMatch = "New password does not match confirmation"
-)
-
 // GetUserID will get the ID of the currently logged in user
-func GetUserID(ctx common.Context) {
+func (p *plugin) GetUserID(ctx common.Context) {
 	ctx.WriteJSON(200, ctx.Get("userID"))
-	return
 }
 
 // GetUser will get a user by ID
-func GetUser(ctx common.Context) {
+func (p *plugin) GetUser(ctx common.Context) {
 	var (
 		user *users.User
 		err  error
@@ -28,11 +23,10 @@ func GetUser(ctx common.Context) {
 	}
 
 	ctx.WriteJSON(200, user)
-	return
 }
 
 // UpdateEmail will update a user's email address
-func UpdateEmail(ctx common.Context) {
+func (p *plugin) UpdateEmail(ctx common.Context) {
 	var (
 		user users.User
 		err  error
@@ -54,7 +48,7 @@ func UpdateEmail(ctx common.Context) {
 }
 
 // UpdatePassword is the update password handler
-func UpdatePassword(ctx common.Context) {
+func (p *plugin) UpdatePassword(ctx common.Context) {
 	var (
 		user users.User
 		err  error
@@ -76,7 +70,7 @@ func UpdatePassword(ctx common.Context) {
 }
 
 // ChangePassword accepts current, new, and confirm password fields
-func ChangePassword(ctx common.Context) {
+func (p *plugin) ChangePassword(ctx common.Context) {
 	var (
 		cpr changePasswordRequest
 		err error
@@ -102,13 +96,8 @@ func ChangePassword(ctx common.Context) {
 	ctx.WriteNoContent()
 }
 
-type changePasswordRequest struct {
-	Current string `json:"current"`
-	New     string `json:"new"`
-}
-
 // EnableUser is the handler for enabling a user
-func EnableUser(ctx common.Context) {
+func (p *plugin) EnableUser(ctx common.Context) {
 	var err error
 	userID := ctx.Param("userID")
 	if err = p.jump.EnableUser(userID); err != nil {
@@ -121,7 +110,7 @@ func EnableUser(ctx common.Context) {
 
 // DisableUser is the handler for disabling a user
 // Note: This will kill all active sessions for this user
-func DisableUser(ctx common.Context) {
+func (p *plugin) DisableUser(ctx common.Context) {
 	var err error
 	userID := ctx.Param("userID")
 	if err = p.jump.DisableUser(userID); err != nil {
@@ -133,7 +122,7 @@ func DisableUser(ctx common.Context) {
 }
 
 // VerifyUser is the handler for verifying a user
-func VerifyUser(ctx common.Context) {
+func (p *plugin) VerifyUser(ctx common.Context) {
 	var err error
 	userID := ctx.Param("userID")
 	if err = p.jump.VerifyUser(userID); err != nil {
@@ -142,4 +131,9 @@ func VerifyUser(ctx common.Context) {
 	}
 
 	ctx.WriteNoContent()
+}
+
+type changePasswordRequest struct {
+	Current string `json:"current"`
+	New     string `json:"new"`
 }

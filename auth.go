@@ -16,7 +16,7 @@ const (
 )
 
 // Login is the login handler
-func Login(ctx common.Context) {
+func (p *plugin) Login(ctx common.Context) {
 	var (
 		login users.User
 		err   error
@@ -72,11 +72,10 @@ func Login(ctx common.Context) {
 
 	// TODO: Respond differently based on content type
 	ctx.WriteJSON(200, user)
-	return
 }
 
 // Logout is the logout handler
-func Logout(ctx common.Context) {
+func (p *plugin) Logout(ctx common.Context) {
 	var err error
 	if err = p.jump.Logout(ctx); err != nil {
 		ctx.WriteJSON(400, err)
