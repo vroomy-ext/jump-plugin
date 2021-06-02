@@ -1,4 +1,4 @@
-package main
+package plugin
 
 import (
 	"github.com/gdbu/emailvalidator"
@@ -19,7 +19,7 @@ type CreateUserResponse struct {
 }
 
 // CreateUser is a handler for creating a new user
-func CreateUser(ctx common.Context) {
+func (p *plugin) CreateUser(ctx common.Context) {
 	var (
 		resp CreateUserResponse
 		err  error
@@ -34,7 +34,7 @@ func CreateUser(ctx common.Context) {
 }
 
 // CreateUserMW is a middleware for creating a new user
-func CreateUserMW(ctx common.Context) {
+func (p *plugin) CreateUserMW(ctx common.Context) {
 	var err error
 	if _, err = createUser(ctx); err != nil {
 		ctx.WriteJSON(400, err)
@@ -43,7 +43,7 @@ func CreateUserMW(ctx common.Context) {
 }
 
 // SignUp is a handler for a self sign-up for a new user
-func SignUp(ctx common.Context) {
+func (p *plugin) SignUp(ctx common.Context) {
 	var (
 		resp CreateUserResponse
 		err  error
@@ -66,6 +66,21 @@ func SignUp(ctx common.Context) {
 	ctx.WriteJSON(200, resp)
 }
 
+// GetUsersList will get the current users list
+func (p *plugin) GetUsersList(ctx common.Context) {
+	var (
+		us  []*users.User
+		err error
+	)
+
+	if us, err = p.jump.GetUsersList(); err != nil {
+		ctx.WriteJSON(400, err)
+		return
+	}
+
+	ctx.WriteJSON(200, us)
+}
+
 func createUser(ctx common.Context) (resp CreateUserResponse, err error) {
 	var req CreateUserRequest
 	if err = ctx.Bind(&req); err != nil {
@@ -84,19 +99,4 @@ func createUser(ctx common.Context) (resp CreateUserResponse, err error) {
 	// Set createdUserID field
 	ctx.Put("createdUserID", resp.UserID)
 	return
-}
-
-// GetUsersList will get the current users list
-func GetUsersList(ctx common.Context) {
-	var (
-		us  []*users.User
-		err error
-	)
-
-	if us, err = p.jump.GetUsersList(); err != nil {
-		ctx.WriteJSON(400, err)
-		return
-	}
-
-	ctx.WriteJSON(200, us)
 }

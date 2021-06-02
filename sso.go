@@ -1,4 +1,4 @@
-package main
+package plugin
 
 import (
 	"time"
@@ -7,7 +7,7 @@ import (
 )
 
 // SSOLogin is the handler for logging in with SSO
-func SSOLogin(ctx common.Context) {
+func (p *plugin) SSOLogin(ctx common.Context) {
 	var err error
 	if ctx.Get("userID") != "" {
 		// User is already logged in, write no content success and return
@@ -28,7 +28,7 @@ func SSOLogin(ctx common.Context) {
 }
 
 // SSOMultiLogin is the handler for logging in with SSO
-func SSOMultiLogin(ctx common.Context) {
+func (p *plugin) SSOMultiLogin(ctx common.Context) {
 	var err error
 	if ctx.Get("userID") != "" {
 		// User is already logged in, write no content success and return

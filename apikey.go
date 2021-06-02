@@ -1,4 +1,4 @@
-package main
+package plugin
 
 import (
 	"github.com/gdbu/jump/apikeys"
@@ -6,7 +6,7 @@ import (
 )
 
 // GetAPIKeysByUser is the handler for retrieving the api keys for a user
-func GetAPIKeysByUser(ctx common.Context) {
+func (p *plugin) GetAPIKeysByUser(ctx common.Context) {
 	var (
 		as  []*apikeys.APIKey
 		err error

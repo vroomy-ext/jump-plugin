@@ -1,4 +1,4 @@
-package main
+package plugin
 
 import (
 	"github.com/vroomy/common"
@@ -7,7 +7,7 @@ import (
 // SetUserMW is will check user permissions. Expects the following arguments:
 //	- redirectOnFail (e.g. false)
 //	- allowNonLoggedIn (e.g. false)
-func SetUserMW(args ...string) (h common.Handler, err error) {
+func (p *plugin) SetUserMW(args ...string) (h common.Handler, err error) {
 	var (
 		redirectOnFail   bool
 		allowNonLoggedIn bool
@@ -34,7 +34,7 @@ func SetUserMW(args ...string) (h common.Handler, err error) {
 // CheckPermissionsMW is will check user permissions. Expects the following arguments:
 //	- groupName (e.g. users)
 //	- paramKey (e.g. userID)
-func CheckPermissionsMW(args ...string) (h common.Handler, err error) {
+func (p *plugin) CheckPermissionsMW(args ...string) (h common.Handler, err error) {
 	var resourceName, paramKey string
 	switch len(args) {
 	case 1:
@@ -55,7 +55,7 @@ func CheckPermissionsMW(args ...string) (h common.Handler, err error) {
 // GrantPermissionsMW is will grant user permissions. Expects the following arguments:
 //	- groupName (e.g. users)
 //	- paramKey (e.g. userID)
-func GrantPermissionsMW(args ...string) (h common.Handler, err error) {
+func (p *plugin) GrantPermissionsMW(args ...string) (h common.Handler, err error) {
 	if len(args) != 3 {
 		err = ErrInvalidGrantPermissionsArguments
 		return

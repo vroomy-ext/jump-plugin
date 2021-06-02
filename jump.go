@@ -1,10 +1,11 @@
-package main
+package plugin
 
 import (
 	"fmt"
 	"log"
 
 	"github.com/gdbu/jump/permissions"
+	"github.com/vroomy/plugins"
 
 	"github.com/gdbu/jump"
 	"github.com/gdbu/scribe"
@@ -12,29 +13,33 @@ import (
 )
 
 const (
-	// ErrResourceIDIsEmpty is returned when resource id is expected but not found withing a permissions hook
-	ErrResourceIDIsEmpty = errors.Error("resourceID is empty")
 	// ErrInvalidSetUserArguments is returned when an invalid number of set user arguments are provided
 	ErrInvalidSetUserArguments = errors.Error("invalid set user arguments, expecting no or one argument (redirectOnFail, optional)")
 	// ErrInvalidCheckPermissionsArguments is returned when an invalid number of check permissions arguments are provided
 	ErrInvalidCheckPermissionsArguments = errors.Error("invalid check permissions arguments, expecting two arguments (resource name and parameter key)")
 	// ErrInvalidGrantPermissionsArguments is returned when an invalid number of grant permissions arguments are provided
 	ErrInvalidGrantPermissionsArguments = errors.Error("invalid check permissions arguments, expecting three arguments (resource name, user actions, admin actions)")
-	// ErrAlreadyLoggedOut is returned when a logout is attempted for a user whom has already logged out of the system.
-	ErrAlreadyLoggedOut = errors.Error("already logged out")
 )
 
 const (
-	permR   = permissions.ActionRead
-	permRW  = permissions.ActionRead | permissions.ActionWrite
 	permRWD = permissions.ActionRead | permissions.ActionWrite | permissions.ActionDelete
-	permWD  = permissions.ActionWrite | permissions.ActionDelete
 )
 
 var p plugin
 
-// Init will be called by vroomy on initialization
-func Init(env map[string]string) (err error) {
+func init() {
+	if err := plugins.Register("jump", &p); err != nil {
+		log.Fatalf("error loading jump plugin: %v", err)
+	}
+}
+
+type plugin struct {
+	out  *scribe.Scribe
+	jump *jump.Jump
+}
+
+// Init will be called by Vroomy on initialization
+func (p *plugin) Init(env map[string]string) (err error) {
 	p.out = scribe.New("Auth")
 
 	if p.jump, err = jump.New(env["dataDir"]); err != nil {
@@ -49,9 +54,19 @@ func Init(env map[string]string) (err error) {
 	return
 }
 
-type plugin struct {
-	out  *scribe.Scribe
-	jump *jump.Jump
+// Load is called by Vroomy during the plugin load phase
+func (p *plugin) Load() (err error) {
+	return
+}
+
+// Backend will return the plugin's backend
+func (p *plugin) Backend() interface{} {
+	return p.jump
+}
+
+// Close will close the Jump plugin and underlying Jump library
+func (p *plugin) Close() error {
+	return p.jump.Close()
 }
 
 func (p *plugin) seed() (err error) {
@@ -80,19 +95,4 @@ func (p *plugin) seed() (err error) {
 	p.out.Successf("Successfully created admin with api key of: %s", apiKey)
 	return
 
-}
-
-// Jump will return the plugin's backend
-func Jump() *jump.Jump {
-	return p.jump
-}
-
-// Backend will return the plugin's backend
-func Backend() interface{} {
-	return p.jump
-}
-
-// Close will close the Jump plugin and underlying Jump library
-func Close() error {
-	return p.jump.Close()
 }
