@@ -134,6 +134,6 @@ func (p *plugin) VerifyUser(ctx common.Context) {
 }
 
 type changePasswordRequest struct {
-	Current string `json:"current"`
-	New     string `json:"new"`
+	Current string `json:"current" form:"current"`
+	New     string `json:"new" form:"new"`
 }
