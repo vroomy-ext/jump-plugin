@@ -28,7 +28,7 @@ func (p *plugin) GetUser(ctx common.Context) {
 // UpdateEmail will update a user's email address
 func (p *plugin) UpdateEmail(ctx common.Context) {
 	var (
-		user users.User
+		user changeRequest
 		err  error
 	)
 
@@ -39,7 +39,7 @@ func (p *plugin) UpdateEmail(ctx common.Context) {
 
 	userID := ctx.Param("userID")
 
-	if err = p.jump.UpdateEmail(userID, user.Email); err != nil {
+	if err = p.jump.UpdateEmail(userID, user.New); err != nil {
 		ctx.WriteJSON(400, err)
 		return
 	}
@@ -72,7 +72,7 @@ func (p *plugin) UpdatePassword(ctx common.Context) {
 // ChangePassword accepts current, new, and confirm password fields
 func (p *plugin) ChangePassword(ctx common.Context) {
 	var (
-		cpr changePasswordRequest
+		cpr changeRequest
 		err error
 	)
 
@@ -133,7 +133,7 @@ func (p *plugin) VerifyUser(ctx common.Context) {
 	ctx.WriteNoContent()
 }
 
-type changePasswordRequest struct {
+type changeRequest struct {
 	Current string `json:"current" form:"current"`
 	New     string `json:"new" form:"new"`
 }
