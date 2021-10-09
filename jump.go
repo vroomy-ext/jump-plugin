@@ -5,11 +5,11 @@ import (
 	"log"
 
 	"github.com/gdbu/jump/permissions"
-	"github.com/vroomy/plugins"
 
 	"github.com/gdbu/jump"
 	"github.com/gdbu/scribe"
 	"github.com/hatchify/errors"
+	"github.com/vroomy/vroomy"
 )
 
 const (
@@ -28,12 +28,14 @@ const (
 var p plugin
 
 func init() {
-	if err := plugins.Register("jump", &p); err != nil {
+	if err := vroomy.Register("jump", &p); err != nil {
 		log.Fatalf("error loading jump plugin: %v", err)
 	}
 }
 
 type plugin struct {
+	vroomy.BasePlugin
+
 	out  *scribe.Scribe
 	jump *jump.Jump
 }
@@ -51,11 +53,6 @@ func (p *plugin) Init(env map[string]string) (err error) {
 		log.Fatalf("error seeding users: %v", err)
 	}
 
-	return
-}
-
-// Load is called by Vroomy during the plugin load phase
-func (p *plugin) Load() (err error) {
 	return
 }
 

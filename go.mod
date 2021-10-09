@@ -1,6 +1,6 @@
 module github.com/vroomy-ext/jump-plugin
 
-go 1.15
+go 1.16
 
 require (
 	github.com/gdbu/emailvalidator v0.5.0
@@ -9,5 +9,5 @@ require (
 	github.com/hatchify/errors v0.4.82
 	github.com/mojura/mojura v0.10.6
 	github.com/vroomy/common v0.5.2
-	github.com/vroomy/plugins v0.6.0
+	github.com/vroomy/vroomy v0.11.0
 )
