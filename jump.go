@@ -40,16 +40,16 @@ type plugin struct {
 	jump *jump.Jump
 }
 
-// Init will be called by Vroomy on initialization
-func (p *plugin) Init(env map[string]string) (err error) {
+// Load will be called by Vroomy on initialization
+func (p *plugin) Load(env map[string]string) (err error) {
 	p.out = scribe.New("Auth")
 
-	if p.jump, err = jump.New(env["dataDir"]); err != nil {
+	if p.jump, err = jump.New(env["dataDir"], nil); err != nil {
 		log.Fatalf("error initializing jump: %v", err)
 	}
 
 	// TODO: Move this to seed
-	if err = p.seed(); err != nil {
+	if err = p.Seed(); err != nil {
 		log.Fatalf("error seeding users: %v", err)
 	}
 
@@ -66,7 +66,7 @@ func (p *plugin) Close() error {
 	return p.jump.Close()
 }
 
-func (p *plugin) seed() (err error) {
+func (p *plugin) Seed() (err error) {
 	var apiKey string
 	if _, err = p.jump.GetUser("00000000"); err == nil {
 		return
