@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/gdbu/jump/permissions"
+	"github.com/mojura/kiroku"
 
 	"github.com/gdbu/jump"
 	"github.com/gdbu/scribe"
@@ -38,13 +39,15 @@ type plugin struct {
 
 	out  *scribe.Scribe
 	jump *jump.Jump
+
+	Source kiroku.Source `vroomy:"mojura-source"`
 }
 
 // Load will be called by Vroomy on initialization
 func (p *plugin) Load(env map[string]string) (err error) {
 	p.out = scribe.New("Auth")
 
-	if p.jump, err = jump.New(env["dataDir"], nil); err != nil {
+	if p.jump, err = jump.New(env["dataDir"], p.Source); err != nil {
 		log.Fatalf("error initializing jump: %v", err)
 	}
 
