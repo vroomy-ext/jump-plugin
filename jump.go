@@ -45,15 +45,15 @@ type plugin struct {
 
 // Load will be called by Vroomy on initialization
 func (p *plugin) Load(env map[string]string) (err error) {
-	p.out = scribe.New("Auth")
-
-	if p.jump, err = jump.New(env["dataDir"], p.Source); err != nil {
-		log.Fatalf("error initializing jump: %v", err)
+	p.out = scribe.New("Jump")
+	if p.jump, err = jump.New(env["dataDir"], p.Source, env["mojura-sync-mode"] == "mirror"); err != nil {
+		err = fmt.Errorf("error initializing jump: %v", err)
+		return
 	}
 
-	// TODO: Move this to seed
 	if err = p.Seed(); err != nil {
-		log.Fatalf("error seeding users: %v", err)
+		err = fmt.Errorf("error seeding users: %v", err)
+		return
 	}
 
 	return
