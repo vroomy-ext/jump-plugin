@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/gdbu/jump/permissions"
-	"github.com/mojura/kiroku"
+	"github.com/mojura/mojura"
 
 	"github.com/gdbu/jump"
 	"github.com/gdbu/scribe"
@@ -40,14 +40,18 @@ type plugin struct {
 	out  *scribe.Scribe
 	jump *jump.Jump
 
-	Source kiroku.Source `vroomy:"mojura-source"`
+	Opts mojura.Opts `vroomy:"mojura-opts"`
 }
 
 // Load will be called by Vroomy on initialization
 func (p *plugin) Load(env map[string]string) (err error) {
 	p.out = scribe.New("Jump")
-	if p.jump, err = jump.New(env["dataDir"], p.Source, env["mojura-sync-mode"] == "mirror"); err != nil {
+	if p.jump, err = jump.New(p.Opts); err != nil {
 		err = fmt.Errorf("error initializing jump: %v", err)
+		return
+	}
+
+	if p.Opts.IsMirror {
 		return
 	}
 
@@ -78,6 +82,7 @@ func (p *plugin) Seed() (err error) {
 	// Set initial core permissions for users resource
 	resourceKey := newResourceKey("users", "")
 	if err = p.jump.SetPermission(resourceKey, "users", permissions.ActionNone, permRWD); err != nil {
+		err = fmt.Errorf("error setting permissions for users group: %v", err)
 		return
 	}
 
