@@ -44,7 +44,7 @@ type plugin struct {
 }
 
 // Load will be called by Vroomy on initialization
-func (p *plugin) Load(env map[string]string) (err error) {
+func (p *plugin) Load(env vroomy.Environment) (err error) {
 	p.out = scribe.New("Jump")
 	if p.jump, err = jump.New(p.Opts); err != nil {
 		err = fmt.Errorf("error initializing jump: %v", err)
