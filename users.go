@@ -3,7 +3,7 @@ package plugin
 import (
 	"github.com/gdbu/emailvalidator"
 	"github.com/gdbu/jump/users"
-	"github.com/vroomy/common"
+	"github.com/vroomy/httpserve"
 )
 
 // CreateUserRequest is the request used to create a user
@@ -19,7 +19,7 @@ type CreateUserResponse struct {
 }
 
 // CreateUser is a handler for creating a new user
-func (p *plugin) CreateUser(ctx common.Context) {
+func (p *plugin) CreateUser(ctx *httpserve.Context) {
 	var (
 		resp CreateUserResponse
 		err  error
@@ -34,7 +34,7 @@ func (p *plugin) CreateUser(ctx common.Context) {
 }
 
 // CreateUserMW is a middleware for creating a new user
-func (p *plugin) CreateUserMW(ctx common.Context) {
+func (p *plugin) CreateUserMW(ctx *httpserve.Context) {
 	var err error
 	if _, err = createUser(ctx); err != nil {
 		ctx.WriteJSON(400, err)
@@ -43,7 +43,7 @@ func (p *plugin) CreateUserMW(ctx common.Context) {
 }
 
 // SignUp is a handler for a self sign-up for a new user
-func (p *plugin) SignUp(ctx common.Context) {
+func (p *plugin) SignUp(ctx *httpserve.Context) {
 	var (
 		resp CreateUserResponse
 		err  error
@@ -67,7 +67,7 @@ func (p *plugin) SignUp(ctx common.Context) {
 }
 
 // GetUsersList will get the current users list
-func (p *plugin) GetUsersList(ctx common.Context) {
+func (p *plugin) GetUsersList(ctx *httpserve.Context) {
 	var (
 		us  []*users.User
 		err error
@@ -81,7 +81,7 @@ func (p *plugin) GetUsersList(ctx common.Context) {
 	ctx.WriteJSON(200, us)
 }
 
-func createUser(ctx common.Context) (resp CreateUserResponse, err error) {
+func createUser(ctx *httpserve.Context) (resp CreateUserResponse, err error) {
 	var req CreateUserRequest
 	if err = ctx.Bind(&req); err != nil {
 		return

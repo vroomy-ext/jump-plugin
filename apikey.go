@@ -2,11 +2,11 @@ package plugin
 
 import (
 	"github.com/gdbu/jump/apikeys"
-	"github.com/vroomy/common"
+	"github.com/vroomy/httpserve"
 )
 
 // GetAPIKeysByUser is the handler for retrieving the api keys for a user
-func (p *plugin) GetAPIKeysByUser(ctx common.Context) {
+func (p *plugin) GetAPIKeysByUser(ctx *httpserve.Context) {
 	var (
 		as  []*apikeys.APIKey
 		err error
