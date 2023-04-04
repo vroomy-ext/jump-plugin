@@ -2,16 +2,16 @@ package plugin
 
 import (
 	"github.com/gdbu/jump/users"
-	"github.com/vroomy/common"
+	"github.com/vroomy/httpserve"
 )
 
 // GetUserID will get the ID of the currently logged in user
-func (p *plugin) GetUserID(ctx common.Context) {
+func (p *plugin) GetUserID(ctx *httpserve.Context) {
 	ctx.WriteJSON(200, ctx.Get("userID"))
 }
 
 // GetUser will get a user by ID
-func (p *plugin) GetUser(ctx common.Context) {
+func (p *plugin) GetUser(ctx *httpserve.Context) {
 	var (
 		user *users.User
 		err  error
@@ -26,7 +26,7 @@ func (p *plugin) GetUser(ctx common.Context) {
 }
 
 // UpdateEmail will update a user's email address
-func (p *plugin) UpdateEmail(ctx common.Context) {
+func (p *plugin) UpdateEmail(ctx *httpserve.Context) {
 	var (
 		user changeRequest
 		err  error
@@ -48,7 +48,7 @@ func (p *plugin) UpdateEmail(ctx common.Context) {
 }
 
 // UpdatePassword is the update password handler
-func (p *plugin) UpdatePassword(ctx common.Context) {
+func (p *plugin) UpdatePassword(ctx *httpserve.Context) {
 	var (
 		user users.User
 		err  error
@@ -70,7 +70,7 @@ func (p *plugin) UpdatePassword(ctx common.Context) {
 }
 
 // ChangePassword accepts current, new, and confirm password fields
-func (p *plugin) ChangePassword(ctx common.Context) {
+func (p *plugin) ChangePassword(ctx *httpserve.Context) {
 	var (
 		cpr changeRequest
 		err error
@@ -97,7 +97,7 @@ func (p *plugin) ChangePassword(ctx common.Context) {
 }
 
 // EnableUser is the handler for enabling a user
-func (p *plugin) EnableUser(ctx common.Context) {
+func (p *plugin) EnableUser(ctx *httpserve.Context) {
 	var err error
 	userID := ctx.Param("userID")
 	if err = p.jump.EnableUser(userID); err != nil {
@@ -110,7 +110,7 @@ func (p *plugin) EnableUser(ctx common.Context) {
 
 // DisableUser is the handler for disabling a user
 // Note: This will kill all active sessions for this user
-func (p *plugin) DisableUser(ctx common.Context) {
+func (p *plugin) DisableUser(ctx *httpserve.Context) {
 	var err error
 	userID := ctx.Param("userID")
 	if err = p.jump.DisableUser(userID); err != nil {
@@ -122,7 +122,7 @@ func (p *plugin) DisableUser(ctx common.Context) {
 }
 
 // VerifyUser is the handler for verifying a user
-func (p *plugin) VerifyUser(ctx common.Context) {
+func (p *plugin) VerifyUser(ctx *httpserve.Context) {
 	var err error
 	userID := ctx.Param("userID")
 	if err = p.jump.VerifyUser(userID); err != nil {

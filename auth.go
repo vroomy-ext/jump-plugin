@@ -6,8 +6,7 @@ import (
 	"github.com/gdbu/jump/users"
 	"github.com/hatchify/errors"
 	"github.com/mojura/mojura"
-
-	"github.com/vroomy/common"
+	"github.com/vroomy/httpserve"
 )
 
 const (
@@ -16,7 +15,7 @@ const (
 )
 
 // Login is the login handler
-func (p *plugin) Login(ctx common.Context) {
+func (p *plugin) Login(ctx *httpserve.Context) {
 	var (
 		login users.User
 		err   error
@@ -75,7 +74,7 @@ func (p *plugin) Login(ctx common.Context) {
 }
 
 // Logout is the logout handler
-func (p *plugin) Logout(ctx common.Context) {
+func (p *plugin) Logout(ctx *httpserve.Context) {
 	var err error
 	if err = p.jump.Logout(ctx); err != nil {
 		ctx.WriteJSON(400, err)
