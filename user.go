@@ -39,7 +39,7 @@ func (p *plugin) UpdateEmail(ctx *httpserve.Context) {
 
 	userID := ctx.Param("userID")
 
-	if err = p.jump.UpdateEmail(userID, user.New); err != nil {
+	if _, err = p.jump.UpdateEmail(userID, user.New); err != nil {
 		ctx.WriteJSON(400, err)
 		return
 	}
@@ -61,7 +61,7 @@ func (p *plugin) UpdatePassword(ctx *httpserve.Context) {
 
 	userID := ctx.Param("userID")
 
-	if err = p.jump.UpdatePassword(userID, user.Password); err != nil {
+	if _, err = p.jump.UpdatePassword(userID, user.Password); err != nil {
 		ctx.WriteJSON(400, err)
 		return
 	}
@@ -88,7 +88,7 @@ func (p *plugin) ChangePassword(ctx *httpserve.Context) {
 		return
 	}
 
-	if err = p.jump.UpdatePassword(userID, cpr.New); err != nil {
+	if _, err = p.jump.UpdatePassword(userID, cpr.New); err != nil {
 		ctx.WriteJSON(400, err)
 		return
 	}
