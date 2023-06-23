@@ -7,9 +7,9 @@ require (
 	github.com/gdbu/jump v0.21.2
 	github.com/gdbu/scribe v0.5.3
 	github.com/hatchify/errors v0.4.82
-	github.com/mojura/mojura v0.17.0
+	github.com/mojura/mojura v0.17.1
 	github.com/vroomy/httpserve v0.10.0
-	github.com/vroomy/vroomy v0.16.0
+	github.com/vroomy/vroomy v0.17.0
 )
 
 require (
@@ -28,7 +28,7 @@ require (
 	github.com/mojura-backends/bolt v0.2.1 // indirect
 	github.com/mojura/backend v0.2.1 // indirect
 	github.com/mojura/enkodo v0.5.6 // indirect
-	github.com/mojura/kiroku v0.10.0 // indirect
+	github.com/mojura/kiroku v0.10.1 // indirect
 	golang.org/x/crypto v0.7.0 // indirect
 	golang.org/x/net v0.8.0 // indirect
 	golang.org/x/sys v0.9.0 // indirect
