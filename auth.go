@@ -1,17 +1,17 @@
 package plugin
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/gdbu/jump/users"
-	"github.com/hatchify/errors"
 	"github.com/mojura/mojura"
 	"github.com/vroomy/httpserve"
 )
 
-const (
+var (
 	// ErrNoLoginFound is returned when an email address is provided that is not found within the system
-	ErrNoLoginFound = errors.Error("no login was found for the provided email address")
+	ErrNoLoginFound = errors.New("no login was found for the provided email address")
 )
 
 // Login is the login handler

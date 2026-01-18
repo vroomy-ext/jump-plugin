@@ -1,6 +1,7 @@
 package plugin
 
 import (
+	"errors"
 	"fmt"
 	"log"
 
@@ -8,18 +9,16 @@ import (
 	"github.com/mojura/mojura"
 
 	"github.com/gdbu/jump"
-	"github.com/gdbu/scribe"
-	"github.com/hatchify/errors"
 	"github.com/vroomy/vroomy"
 )
 
-const (
+var (
 	// ErrInvalidSetUserArguments is returned when an invalid number of set user arguments are provided
-	ErrInvalidSetUserArguments = errors.Error("invalid set user arguments, expecting no or one argument (redirectOnFail, optional)")
+	ErrInvalidSetUserArguments = errors.New("invalid set user arguments, expecting no or one argument (redirectOnFail, optional)")
 	// ErrInvalidCheckPermissionsArguments is returned when an invalid number of check permissions arguments are provided
-	ErrInvalidCheckPermissionsArguments = errors.Error("invalid check permissions arguments, expecting two arguments (resource name and parameter key)")
+	ErrInvalidCheckPermissionsArguments = errors.New("invalid check permissions arguments, expecting two arguments (resource name and parameter key)")
 	// ErrInvalidGrantPermissionsArguments is returned when an invalid number of grant permissions arguments are provided
-	ErrInvalidGrantPermissionsArguments = errors.Error("invalid check permissions arguments, expecting three arguments (resource name, user actions, admin actions)")
+	ErrInvalidGrantPermissionsArguments = errors.New("invalid check permissions arguments, expecting three arguments (resource name, user actions, admin actions)")
 )
 
 const (
@@ -37,7 +36,7 @@ func init() {
 type plugin struct {
 	vroomy.BasePlugin
 
-	out  *scribe.Scribe
+	out  mojura.Logger
 	jump *jump.Jump
 
 	Opts mojura.Opts `vroomy:"mojura-opts"`
@@ -45,7 +44,7 @@ type plugin struct {
 
 // Load will be called by Vroomy on initialization
 func (p *plugin) Load(env vroomy.Environment) (err error) {
-	p.out = scribe.New("Jump")
+	p.out = mojura.NewLogger()
 	if p.jump, err = jump.New(p.Opts); err != nil {
 		err = fmt.Errorf("error initializing jump: %v", err)
 		return
@@ -97,7 +96,7 @@ func (p *plugin) Seed() (err error) {
 		return
 	}
 
-	p.out.Successf("Successfully created admin with api key of: %s", apiKey)
+	p.out.Info("Successfully created admin with api key of: %s", apiKey)
 	return
 
 }
