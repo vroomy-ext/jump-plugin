@@ -4,8 +4,8 @@ go 1.25.0
 
 require (
 	github.com/gdbu/emailvalidator v0.6.0
-	github.com/gdbu/jump v0.23.0
-	github.com/mojura/mojura v0.23.1
+	github.com/gdbu/jump v0.23.1
+	github.com/mojura/mojura v0.23.2
 	github.com/vroomy/httpserve v0.13.1
 	github.com/vroomy/vroomy v0.19.0
 )
